@@ -18,7 +18,7 @@ const HackathonSchema = new mongoose.Schema({
   certificateUrl: { type: String },
   teamType: { type: String },
   description: { type: String },
-  techStack: { type: String }
+  techStack: [{ type: String }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Hackathon', HackathonSchema);

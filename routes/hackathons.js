@@ -4,15 +4,20 @@ const auth = require('../middleware/authMiddleware');
 const Hackathon = require('../models/Hackathon');
 const User = require('../models/User'); 
 
-router.post('/', auth, async (req, res) => {
+router.post("/", auth, async (req, res) => {
   try {
-    const hackathon = new Hackathon({ ...req.body, userId: req.user.id });
+    const hackathon = new Hackathon({
+      ...req.body,
+      userId: req.user?.id,
+    });
     const saved = await hackathon.save();
-    console.log('🚀🔥Saved hackathon:', saved);
     res.status(201).json({ success: true, data: saved });
   } catch (err) {
-    console.error('Error creating hackathon:', err);
-    res.status(500).json({ success: false, msg: 'Server Error' });
+    res.status(500).json({
+      success: false,
+      msg: "Server Error",
+      error: err.message,
+    });
   }
 });
 
